@@ -22,14 +22,6 @@ const Navbar: React.FC<{
   return (
     <div className={cn(s.root)}>
       <Container>
-        <div className="flex items-center bg-slate-300 py-2 px-6">
-          <div className="mr-2">
-            <ChevronDown />
-          </div>
-          <span className="text-sm uppercase tracking-wider font-medium">
-            {data.bannerText}
-          </span>
-        </div>
         <div className="flex justify-between items-center flex-row px-2 py-2 md:py-2 relative">
           <div className="flex flex-1 md:flex">
             <a className={s.link}>My Closet</a>
