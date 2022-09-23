@@ -47,7 +47,7 @@ const Navbar: React.FC<{
               </Link>
             </nav>
             <span className="ml-3">
-              <I18nWidget />
+              {/*<I18nWidget />*/}
             </span>
           </div>
         </div>

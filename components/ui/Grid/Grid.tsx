@@ -47,8 +47,14 @@ const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
   )
 
   // If it contains data we build the childrens.
+    console.log("data", data)
   const { grid } = data
-  if (grid) {
+    console.log("grid", grid)
+ {grid?.map((item: any , i) => (
+     console.log("item", item)
+ ))}
+
+    if (grid) {
     const meassureProps =
       variant === 'cols4'
         ? {
@@ -71,7 +77,7 @@ const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
           {data.description && <p className="">{data.description}</p>}
         </div>
         <div className={rootClassName}>
-          {grid.map(({ item }, i) => (
+          {grid.map(( item: any, i) => (
             <div
               className="flex flex-col items-center text-center mb-10"
               key={`item__${i}`}
@@ -97,14 +103,14 @@ const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
                   dangerouslySetInnerHTML={{ __html: item.description }}
                 />
               )}
-              <Link href={item!.link.url ? item!.link.url : '/'} passHref>
+              <Link href={item?.link?.url ? item?.link?.url : '/'} passHref>
                 <a
-                  className="mt-4 uppercase font-semibold tracking-wide 
-            text-xs text-slate-900 bg-white rounded-full 
+                  className="mt-4 uppercase font-semibold tracking-wide
+            text-xs text-slate-900 bg-white rounded-full
             px-4 py-3 border  border-slate-400 hover:border-black
             transition ease-linear duration-150"
                 >
-                  {item!.link.title}
+                  {item?.link?.title}
                 </a>
               </Link>
             </div>

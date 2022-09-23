@@ -166,7 +166,7 @@ const Footer: FC<Props> = () => {
               >
                 <Github />
               </a>
-              <I18nWidget />
+              {/*<I18nWidget />*/}
             </div>
           </div>
         </div>
