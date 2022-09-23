@@ -40,7 +40,7 @@ yarn create next-app --example https://github.com/vercel/examples/tree/main/solu
 Copy the `.env.example` file in this directory to `.env.local` and set your Contentstack settings
 
 ```bash
-cp .env.example .env.local
+cp .env .env.local
 ```
 
 Next, run Next.js in development mode:

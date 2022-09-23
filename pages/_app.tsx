@@ -10,7 +10,7 @@ function App({ Component, pageProps }: AppProps) {
   const Layout = getLayout<LayoutProps>(Component)
 
   return (
-    <Layout title="Content Stack Commerce Demo" path={`solutions/${info.name}`}>
+    <Layout title="BigCommerce Demo" path={`https://www.bigcommerce.com/`}>
       <Component {...pageProps} />
     </Layout>
   )

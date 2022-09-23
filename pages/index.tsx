@@ -13,9 +13,10 @@ export async function getStaticProps({
     const entry = await cs.getEntry(
       // hardcoded example
       'home_page',
-      'blt5c760b6ce70ae18b',
+      'blt80a279c19cc73a08',
       locale ? (locale.toLocaleLowerCase() as string) : 'en-US'
     )
+    console.log("entry", entry)
 
     if (entry) {
       return {
@@ -33,7 +34,10 @@ export async function getStaticProps({
 }
 
 function Index(props: Entry) {
+  console.log("props", props)
+
   const { title, seo, modular_blocks = [], header = { links: [] } } = props
+
   return (
     <>
       <Head>

@@ -18,6 +18,7 @@ const Navbar: React.FC<{
     links: [],
   },
 }) => {
+
   return (
     <div className={cn(s.root)}>
       <Container>
@@ -81,13 +82,14 @@ const Navbar: React.FC<{
       <div className=" border-b border-gray-300 px-4 md:py-4">
         <Container>
           <nav className="hidden lg:flex flex-row space-x-8 items-center justify-center">
-            {data.links?.map(({ link }) => (
+            {data.links?.map(( link:any ) => (
+
               <a
                 className="cursor-pointer hover:text-gray-600 text-center text-sm uppercase font-medium tracking-widest"
-                href={link.url}
-                key={link.title}
+                href={link?.title ?? ""}
+                key={link?.title ?? ""}
               >
-                {link.title}
+                {link?.title ?? "aa"}
               </a>
             ))}
             <div className="flex-1">
