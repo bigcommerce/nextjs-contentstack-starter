@@ -1,52 +1,50 @@
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
-import Head from 'next/head'
-import cs from '@lib/contentstack'
-import { Layout } from '@vercel/examples-ui'
-import { Navbar, Footer, UIComponent, Container } from '@components/ui'
+import type { GetStaticPropsContext } from "next";
+import Head from "next/head";
+import { Layout } from "@vercel/examples-ui";
+import { Navbar, Footer, UIComponent, Container } from "@components/ui";
+import { getAllEntries } from "@lib/cms/cmsEntries";
 
-export async function getStaticProps({
-  locale,
-}: GetStaticPropsContext): Promise<
-  GetStaticPropsResult<Entry | null> | undefined
-> {
+export async function getStaticProps() {
   try {
-    const entry = await cs.getEntry(
-      // hardcoded example
-      'home_page',
-      'blt5c760b6ce70ae18b',
-      locale ? (locale.toLocaleLowerCase() as string) : 'en-US'
-    )
-
+    const entry = await getAllEntries("home_page");
+    const header = await getAllEntries("header");
+    const navBar: any = header[0] || null;
+    console.log("navBar", navBar);
     if (entry) {
       return {
         props: {
-          ...entry,
+          ...entry[0],
+          navBar,
         },
         revalidate: 1,
-      }
+      };
     }
 
-    throw new Error('Entry is not valid')
+    throw new Error("Entry is not valid");
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 }
 
-function Index(props: Entry) {
-  const { title, seo, modular_blocks = [], header = { links: [] } } = props
+function Index(props: any) {
+  const { modular_blocks = [], navBar } = props;
+  console.log("navLinks", navBar);
+  console.log("modular_blocks", modular_blocks);
   return (
     <>
       <Head>
-        <title>
-          {seo.title ? seo.title : title} - {seo.description}
-        </title>
-        <meta name="description" content={seo.description} />
+        <title>BigCommerce Example</title>
+        <meta
+          name="description"
+          content="This is a basic example outlining how to use BigCommerce"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container>
-        <Navbar data={header} />
+        <Navbar data={navBar} />
+        {/*// @ts-ignore*/}
         {modular_blocks.map(({ component }, i) => {
-          const { component_type, component_variant, ...rest } = component
+          const { component_type, component_variant, ...rest } = component;
           return (
             <UIComponent
               key={`${component_type}_${i}`}
@@ -55,14 +53,14 @@ function Index(props: Entry) {
               data={rest}
               priority={i < 3}
             />
-          )
+          );
         })}
       </Container>
       <Footer pages={[]} />
     </>
-  )
+  );
 }
 
-Index.Layout = Layout
+Index.Layout = Layout;
 
-export default Index
+export default Index;

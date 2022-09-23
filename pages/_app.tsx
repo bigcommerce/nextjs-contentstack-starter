@@ -1,19 +1,18 @@
-import type { AppProps } from 'next/app'
-import type { LayoutProps } from '@vercel/examples-ui/layout'
-import info from '../package.json'
-import '@vercel/examples-ui/globals.css'
-import '../styles/globals.css'
+import type { AppProps } from "next/app";
+import type { LayoutProps } from "@vercel/examples-ui/layout";
+import "@vercel/examples-ui/globals.css";
+import "../styles/globals.css";
 
-import { getLayout } from '@vercel/examples-ui'
+import { getLayout } from "@vercel/examples-ui";
 
 function App({ Component, pageProps }: AppProps) {
-  const Layout = getLayout<LayoutProps>(Component)
+  const Layout = getLayout<LayoutProps>(Component);
 
   return (
-    <Layout title="Content Stack Commerce Demo" path={`solutions/${info.name}`}>
+    <div>
       <Component {...pageProps} />
-    </Layout>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;

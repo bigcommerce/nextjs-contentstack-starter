@@ -4,10 +4,12 @@ const withTM = require('@vercel/examples-ui/transpile')()
 module.exports = withTM({
   reactStrictMode: true,
   i18n: {
-    locales: ['en-US', 'es'],
+    locales: ['en-US'],
     defaultLocale: 'en-US',
   },
   images: {
-    domains: ['images.contentstack.io'],
+    domains: ['images.contentstack.io',
+      'cdn11.bigcommerce.com'
+    ],
   },
 })

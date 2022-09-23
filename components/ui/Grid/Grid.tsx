@@ -1,56 +1,62 @@
-import cn from 'classnames'
-import { FC, ReactNode, Component } from 'react'
-import s from './Grid.module.css'
-import Image from 'next/image'
-import Link from 'next/link'
+import cn from "classnames";
+import { FC, ReactNode, Component } from "react";
+import s from "./Grid.module.css";
+import Image from "next/image";
+import Link from "next/link";
 
 export interface GridEntity {
-  grid: GridData
+  grid: GridData;
 }
 
 export interface GridData {
-  item: ItemData
+  item: ItemData;
 }
 
 export interface ItemData {
-  title: string
-  description: string
-  link: LinkData
-  img?: any
+  title: string;
+  description: string;
+  link: LinkData;
+  img?: any;
 }
 
 export interface LinkData {
-  title: string
-  url: string
+  title: string;
+  url: string;
 }
 
 export interface DataProps {
-  title: string
-  description: string
-  grid: GridData[]
+  title: string;
+  description: string;
+  grid: GridData[];
 }
 
 interface Props {
-  className?: string
-  children?: ReactNode[] | Component[] | any[]
-  variant?: 'cols4' | string
-  data?: DataProps
+  className?: string;
+  children?: ReactNode[] | Component[] | any[];
+  variant?: "cols4" | string;
+  data?: DataProps;
 }
 
 const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
   const rootClassName = cn(
     s.root,
     {
-      [s.variantCols4]: variant === 'cols4',
+      [s.variantCols4]: variant === "cols4",
     },
     className
-  )
+  );
 
   // If it contains data we build the childrens.
-  const { grid } = data
+  console.log("data", data);
+  const { grid } = data;
+  console.log("grid", grid);
+  {
+    grid?.map((item: any, i) => console.log("1:", item?.bc_products));
+  }
+
   if (grid) {
     const meassureProps =
-      variant === 'cols4'
+      variant === "cols4"
         ? {
             width: 263,
             height: 365,
@@ -58,7 +64,7 @@ const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
         : {
             width: 365,
             height: 365,
-          }
+          };
 
     return (
       <div>
@@ -71,13 +77,13 @@ const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
           {data.description && <p className="">{data.description}</p>}
         </div>
         <div className={rootClassName}>
-          {grid.map(({ item }, i) => (
+          {grid.map((item: any, i) => (
             <div
               className="flex flex-col items-center text-center mb-10"
               key={`item__${i}`}
             >
               <div className="mb-2">
-                {item.img.url && (
+                {item?.img?.url && (
                   <Image
                     src={item.img.url}
                     alt={item.img.title}
@@ -97,23 +103,23 @@ const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
                   dangerouslySetInnerHTML={{ __html: item.description }}
                 />
               )}
-              <Link href={item!.link.url ? item!.link.url : '/'} passHref>
+              <Link href={item?.link?.url ? item?.link?.url : "/"} passHref>
                 <a
-                  className="mt-4 uppercase font-semibold tracking-wide 
-            text-xs text-slate-900 bg-white rounded-full 
+                  className="mt-4 uppercase font-semibold tracking-wide
+            text-xs text-slate-900 bg-white rounded-full
             px-4 py-3 border  border-slate-400 hover:border-black
             transition ease-linear duration-150"
                 >
-                  {item!.link.title}
+                  {item?.link?.title}
                 </a>
               </Link>
             </div>
           ))}
         </div>
       </div>
-    )
+    );
   }
-  return <div className={rootClassName}>{children}</div>
-}
+  return <div className={rootClassName}>{children}</div>;
+};
 
-export default Grid
+export default Grid;
