@@ -8,6 +8,8 @@ module.exports = withTM({
     defaultLocale: 'en-US',
   },
   images: {
-    domains: ['images.contentstack.io'],
+    domains: ['images.contentstack.io',
+      'cdn11.bigcommerce.com'
+    ],
   },
 })

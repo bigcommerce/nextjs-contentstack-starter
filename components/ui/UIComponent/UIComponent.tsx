@@ -1,6 +1,7 @@
 import React from 'react'
 import Grid from '@components/ui/Grid/Grid'
 import Hero from '@components/ui/Hero'
+import GridProduct from "@components/ui/GridProduct";
 
 
 
@@ -16,6 +17,7 @@ const UIComponent: React.FC<{
   const componentMap = {
     hero: Hero,
     grid: Grid,
+    gridProduct: GridProduct,
     default: () => {
       console.log('Component Type not specified')
       return null

@@ -1,6 +1,6 @@
 import cn from 'classnames'
 import { FC, ReactNode, Component } from 'react'
-import s from './Grid.module.css'
+import s from './GridProduct.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -37,7 +37,7 @@ interface Props {
   data?: DataProps
 }
 
-const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
+const GridProduct: FC<Props> = ({ className, children, variant, data = {} }) => {
   const rootClassName = cn(
     s.root,
     {
@@ -54,9 +54,13 @@ const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
      console.log("1:", item?.bc_products)
  ))}
 
+    // @ts-ignore
     const bc_products = grid
     // @ts-ignore
     console.log("kjskjskj", bc_products[0]?.bc_products?.data)
+    // @ts-ignore
+    const test = bc_products[0]?.bc_products?.data
+    console.log("sss", test[0]?.primary_image)
 
     if (grid) {
     const meassureProps =
@@ -70,7 +74,8 @@ const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
             height: 365,
           }
 
-    return (
+        let bc_products;
+        return (
       <div>
         <div className="text-center my-12">
           {data.title && (
@@ -81,30 +86,30 @@ const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
           {data.description && <p className="">{data.description}</p>}
         </div>
         <div className={rootClassName}>
-          {grid.map(( item: any, i) => (
+          {test?.map(( item: any, i: any) => (
             <div
               className="flex flex-col items-center text-center mb-10"
               key={`item__${i}`}
             >
               <div className="mb-2">
-                {item?.img?.url && (
+                {item?.page_title && (
                   <Image
-                    src={item.img.url}
-                    alt={item.img.title}
+                    src={item?.primary_image?.url_standard}
+                    alt={item.primary_image?.url_standard}
                     layout="fixed"
                     {...meassureProps}
                   />
                 )}
               </div>
-              {item.title && (
+              {item?.name && (
                 <h2 className="mb-2 text-lg font-medium tracking-wide uppercase">
-                  {item.title}
+                  {item?.name}
                 </h2>
               )}
-              {item.description && (
+              {item?.description && (
                 <div
                   className="mb-2 px-4"
-                  dangerouslySetInnerHTML={{ __html: item.description }}
+                  dangerouslySetInnerHTML={{ __html: item?.description }}
                 />
               )}
               <Link href={item?.link?.url ? item?.link?.url : '/'} passHref>
@@ -114,7 +119,7 @@ const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
             px-4 py-3 border  border-slate-400 hover:border-black
             transition ease-linear duration-150"
                 >
-                  {item?.link?.title}
+                  Shop Now
                 </a>
               </Link>
             </div>
@@ -126,4 +131,4 @@ const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
   return <div className={rootClassName}>{children}</div>
 }
 
-export default Grid
+export default GridProduct
