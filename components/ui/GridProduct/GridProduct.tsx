@@ -60,7 +60,7 @@ const GridProduct: FC<Props> = ({ className, children, variant, data = {} }) => 
     console.log("kjskjskj", bc_products[0]?.bc_products?.data)
     // @ts-ignore
     const test = bc_products[0]?.bc_products?.data
-    console.log("sss", test[0]?.primary_image)
+    console.log("sss", test[0]?.primary_image?.url_standard)
 
     if (grid) {
     const meassureProps =
@@ -92,9 +92,9 @@ const GridProduct: FC<Props> = ({ className, children, variant, data = {} }) => 
               key={`item__${i}`}
             >
               <div className="mb-2">
-                {item?.page_title && (
+                {item?.name && (
                   <Image
-                    src={item?.primary_image?.url_standard}
+                    src={item.primary_image?.url_standard}
                     alt={item.primary_image?.url_standard}
                     layout="fixed"
                     {...meassureProps}
@@ -111,6 +111,7 @@ const GridProduct: FC<Props> = ({ className, children, variant, data = {} }) => 
                   className="mb-2 px-4"
                   dangerouslySetInnerHTML={{ __html: item?.description }}
                 />
+
               )}
               <Link href={item?.link?.url ? item?.link?.url : '/'} passHref>
                 <a
