@@ -1,51 +1,43 @@
-import type { GetStaticPropsContext, GetStaticPropsResult } from 'next'
+import type {GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult} from 'next'
+
 import Head from 'next/head'
 import cs from '@lib/contentstack'
 import { Layout } from '@vercel/examples-ui'
 import { Navbar, Footer, UIComponent, Container } from '@components/ui'
-import {getAllEntries, getEntriesByKey} from "@lib/cmsEntries";
+import {getAllEntries} from "@lib/cmsEntries";
 
 export async function getStaticProps({
   locale,
 }: GetStaticPropsContext): Promise<
   GetStaticPropsResult<Entry | null> | undefined
 > {
-  try {
+  const entry = await getAllEntries("category")
 
-
-    const entry = await getAllEntries("home_page")
-
-    console.log("entry", entry[0])
-
+  console.log("category", entry[0]?. bc_cat?.data)
     if (entry) {
       return {
         props: {
-          ...entry[0],
+          ...entry,
         },
         revalidate: 1,
       }
     }
+}
 
-    throw new Error('Entry is not valid')
-  } catch (err) {
-    console.log(err)
+export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+  return {
+    paths: [],
+    fallback: 'blocking',
   }
 }
 
-function Index(props: Entry) {
-  console.log("props", props)
+function Listing(props: Entry) {
+  console.log("catss", props)
 
-  const { title, seo, modular_blocks = [], header = { links: [] } } = props
+  const { title, modular_blocks = [], header = { links: [] } } = props
 
   return (
     <>
-      <Head>
-        <title>
-          {seo?.title ? seo?.title : title} - {seo?.description}
-        </title>
-        <meta name="description" content={seo?.description} />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <Container>
         <Navbar data={header} />
         {modular_blocks.map(({ component }, i) => {
@@ -66,6 +58,6 @@ function Index(props: Entry) {
   )
 }
 
-Index.Layout = Layout
+Listing.Layout = Layout
 
-export default Index
+export default Listing

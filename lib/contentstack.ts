@@ -39,4 +39,5 @@ const contentStack = {
   },
 }
 
+
 export default contentStack

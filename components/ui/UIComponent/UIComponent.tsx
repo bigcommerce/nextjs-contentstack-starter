@@ -2,6 +2,8 @@ import React from 'react'
 import Grid from '@components/ui/Grid/Grid'
 import Hero from '@components/ui/Hero'
 
+
+
 const UIComponent: React.FC<{
   componentType: UIComponentTypes
   componentVariant?: string

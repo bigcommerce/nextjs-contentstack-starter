@@ -83,7 +83,7 @@ const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
               key={`item__${i}`}
             >
               <div className="mb-2">
-                {item.img.url && (
+                {item?.img?.url && (
                   <Image
                     src={item.img.url}
                     alt={item.img.title}

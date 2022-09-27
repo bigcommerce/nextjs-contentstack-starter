@@ -11,8 +11,7 @@ interface Props {
 
 const Hero: React.FC<Props> = ({ data, variant, priority = false }) => {
   console.log("data", data)
-  console.log("variant", variant)
-  console.log("priority", priority)
+
 
   const image =
     data.background_image && data.background_image.url
@@ -44,9 +43,9 @@ const Hero: React.FC<Props> = ({ data, variant, priority = false }) => {
             dangerouslySetInnerHTML={{ __html: data.description }}
           />
           {data.link && (
-            <Link href={data.link.url ? data.link.url : '/'} passHref>
+            <Link href={data?.link.url ? data?.link?.url : '/'} passHref>
               <a className="uppercase font-semibold tracking-wide text-xs text-slate-100 bg-slate-900 rounded-full px-4 py-3 hover:bg-black transition-colors ease-in duration-150">
-                {data.link.title}
+                {data?.link?.title}
               </a>
             </Link>
           )}
@@ -79,26 +78,26 @@ const Hero: React.FC<Props> = ({ data, variant, priority = false }) => {
             />
           </div>
         ) : null}
-        <div className="relative z-10 text-center my-2 mx-6">
-          <h2 className="mb-2 text-2xl font-medium tracking-wide">
-            {data.title}
-          </h2>
-          <div
-            className={cn(s.description, 'mb-6 text-center')}
-            dangerouslySetInnerHTML={{ __html: data.description }}
-          />
+        {/*<div className="relative z-10 text-center my-2 mx-6">*/}
+        {/*  <h2 className="mb-2 text-2xl font-medium tracking-wide">*/}
+        {/*    {data.title}*/}
+        {/*  </h2>*/}
+        {/*  <div*/}
+        {/*    className={cn(s.description, 'mb-6 text-center')}*/}
+        {/*    dangerouslySetInnerHTML={{ __html: data.description }}*/}
+        {/*  />*/}
 
-          <Link href={data.link.url ? data.link.url : '/'} passHref>
-            <a
-              className="uppercase font-semibold tracking-wide 
-            text-xs text-slate-900 bg-slate-200 rounded-full 
-            px-4 py-3 border  border-slate-400 hover:border-black
-            transition ease-linear duration-150"
-            >
-              {data.link.title}
-            </a>
-          </Link>
-        </div>
+        {/*  <Link href={data?.link?.url ? data?.link?.url : '/'} passHref>*/}
+        {/*    <a*/}
+        {/*      className="uppercase font-semibold tracking-wide */}
+        {/*    text-xs text-slate-900 bg-slate-200 rounded-full */}
+        {/*    px-4 py-3 border  border-slate-400 hover:border-black*/}
+        {/*    transition ease-linear duration-150"*/}
+        {/*    >*/}
+        {/*      {data?.link?.title}*/}
+        {/*    </a>*/}
+        {/*  </Link>*/}
+        {/*</div>*/}
       </div>
     )
   }
@@ -123,9 +122,9 @@ const Hero: React.FC<Props> = ({ data, variant, priority = false }) => {
           className="mb-6"
           dangerouslySetInnerHTML={{ __html: data.description }}
         />
-        <Link href={data.link.url ? data.link.url : '/'} passHref>
+        <Link href={data?.link?.url ? data.link.url : '/'} passHref>
           <a className="uppercase font-semibold tracking-wide text-xs text-slate-100 bg-slate-900 rounded-full px-4 py-3 hover:bg-black transition-colors ease-in duration-150">
-            {data.link.title}
+            {data?.link?.title}
           </a>
         </Link>
       </div>
