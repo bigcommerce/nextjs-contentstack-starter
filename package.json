@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@bigcommerce/storefront-data-hooks": "^1.7.0",
     "@vercel/examples-ui": "^0.3.2",
     "@vercel/fetch": "^6.1.1",
     "classnames": "^2.3.1",

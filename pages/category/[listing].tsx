@@ -5,19 +5,35 @@ import cs from '@lib/contentstack'
 import { Layout } from '@vercel/examples-ui'
 import { Navbar, Footer, UIComponent, Container } from '@components/ui'
 import {getAllEntries} from "@lib/cmsEntries";
+import useSearch from '@bigcommerce/storefront-data-hooks/products/use-search'
+
+import { getConfig } from '@bigcommerce/storefront-data-hooks/api'
+import getAllProducts from '@bigcommerce/storefront-data-hooks/api/operations/get-all-products'
 
 export async function getStaticProps({
-  locale,
+  locale,params
 }: GetStaticPropsContext): Promise<
   GetStaticPropsResult<Entry | null> | undefined
 > {
-  const entry = await getAllEntries("category")
 
-  console.log("category", entry[0]?. bc_cat?.data)
-    if (entry) {
+
+  console.log("params", params)
+
+    // const { data } = await useSearch( {
+    //   categoryId: 2,
+    // })
+    //
+    // const {products, pagination} = data
+
+
+  const { products } = await getAllProducts({
+  })
+  console.log("products", products)
+    if (products) {
       return {
+        // @ts-ignore
         props: {
-          ...entry,
+          ...products,
         },
         revalidate: 1,
       }
@@ -31,16 +47,23 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
   }
 }
 
-function Listing(props: Entry) {
+function Listing(props: any) {
   console.log("catss", props)
 
   const { title, modular_blocks = [], header = { links: [] } } = props
+
+    const {data}  =  useSearch ( {
+      categoryId: 25,
+    } )
+
+    console.log ( "jj", data )
+
 
   return (
     <>
       <Container>
         <Navbar data={header} />
-        {modular_blocks.map(({ component }, i) => {
+        {modular_blocks.map(( component: any , i: any) => {
           const { component_type, component_variant, ...rest } = component
           return (
             <UIComponent
@@ -57,6 +80,7 @@ function Listing(props: Entry) {
     </>
   )
 }
+
 
 Listing.Layout = Layout
 
