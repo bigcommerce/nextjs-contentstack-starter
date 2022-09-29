@@ -14,7 +14,7 @@ export const ProductCard = (props: Props): ReactElement => {
 
   const { product } = props
 
-  const image = product?.node?.defaultImage?.url640wide || "productImagePlaceholder"
+  const image = product?.node?.defaultImage?.url640wide || ""
 
   let path = product?.node?.path || ""
 
