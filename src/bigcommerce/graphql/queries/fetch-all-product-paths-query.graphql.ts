@@ -11,6 +11,14 @@ export const fetchAllProductPathsQuery = /* GraphQL */ `
           node {
             entityId
             path
+            name
+            categories {
+            edges {
+            node {
+            name
+            }
+            }
+            }
             id
           }
         }

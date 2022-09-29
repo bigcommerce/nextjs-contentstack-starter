@@ -1,41 +1,51 @@
 import type {GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult} from 'next'
-
-import Head from 'next/head'
-import cs from '@lib/contentstack'
 import { Layout } from '@vercel/examples-ui'
 import { Navbar, Footer, UIComponent, Container } from '@components/ui'
 import {getAllEntries} from "@lib/cmsEntries";
-import useSearch from '@bigcommerce/storefront-data-hooks/products/use-search'
-
-import { getConfig } from '@bigcommerce/storefront-data-hooks/api'
-import getAllProducts from '@bigcommerce/storefront-data-hooks/api/operations/get-all-products'
+import {fetchGraphQL} from "../../src/bigcommerce/fetchers/fetch-graphql";
+import {fetchCategoryProductQuery} from "../../src/bigcommerce/graphql/queries/fetch-category-products-query.graphql";
+import getSlugName from "@lib/get-slug-name";
+import ProductCard from "@components/ui/ProductCard";
 
 export async function getStaticProps({
   locale,params
 }: GetStaticPropsContext): Promise<
-  GetStaticPropsResult<Entry | null> | undefined
+  GetStaticPropsResult<any | null> | undefined
 > {
+    //TODO   GetStaticPropsResult<Products
 
+  const listing = typeof params?.listing === 'string' ? getSlugName(params.listing) : ''
+  const entry = await getAllEntries("header")
 
-  console.log("params", params)
+    let products
 
-    // const { data } = await useSearch( {
-    //   categoryId: 2,
-    // })
-    //
-    // const {products, pagination} = data
+const categories = entry[0]?.bc_cat?.data
+  try {
+    const activeCatogories =
+        categories.filter((cat: any) => {
+          return getSlugName(cat.name) === listing
+        }) || null
+     const activeCategory = activeCatogories[0]
+      if (activeCategory) {
+           products = await fetchGraphQL(fetchCategoryProductQuery, {categoryEntityId: activeCategory.id})
 
+      } else {
+          //TODO Brands
+        //Return not found
+        console.log("not cat match")
+      }
+  } catch (err) {}
 
-  const { products } = await getAllProducts({
-  })
-  console.log("products", products)
-    if (products) {
+  console.log("sdfsdfsdfsd", products?.data?.site?.search?.searchProducts?.products?.edges)
+    //TODO
+  const normalizeProducts = products?.data?.site?.search?.searchProducts?.products?.edges || []
+
+    if (normalizeProducts) {
       return {
-        // @ts-ignore
-        props: {
-          ...products,
-        },
-        revalidate: 1,
+          props: {
+              normalizeProducts,
+          },
+          revalidate: 1
       }
     }
 }
@@ -48,15 +58,9 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 }
 
 function Listing(props: any) {
-  console.log("catss", props)
 
-  const { title, modular_blocks = [], header = { links: [] } } = props
-
-    const {data}  =  useSearch ( {
-      categoryId: 25,
-    } )
-
-    console.log ( "jj", data )
+    //TODO switch over to new header entitiy
+  const { normalizeProducts, modular_blocks = [], header = { links: [] } } = props
 
 
   return (
@@ -75,6 +79,18 @@ function Listing(props: any) {
             />
           )
         })}
+
+          <div className="grid grid-cols-2 gap-2 lg:m-3 w-full lg:grid-cols-3 lg:pr-2 lg:pl-2">
+          {normalizeProducts.map(( product: any , i: any) => {
+              return (
+                  <div key={product?.node?.name}>
+                      <ProductCard product={product}/>
+                  </div>
+              )
+          })}
+          </div>
+
+
       </Container>
       <Footer pages={[]} />
     </>

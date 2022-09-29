@@ -13,7 +13,7 @@ const config: Config = {
 }
 
 const Stack = Contentstack.Stack(config)
-type CmsContentTypes = 'story' | 'category' | 'home_page'
+type CmsContentTypes = 'story' | 'category' | 'home_page' | 'header'
 
 /**
  * Fetch result of ContentStack query.

@@ -3,7 +3,7 @@ const Logo = ({ className = '', ...props }) => (
 
 
                                                                           fill="#34313f"
-                                                                          fill-rule="evenodd"/>
+                                                                          fillRule="evenodd"/>
     </svg>
 )
 

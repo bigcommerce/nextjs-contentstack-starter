@@ -20,7 +20,7 @@ export const fetchGraphQL = async (query: string, variables = {}, fetchOptions =
     method: 'POST',
     headers: {
       Authorization: `Bearer ${apiToken}`,
-      // ...fetchOptions?.headers,
+      // ...fetchOptions,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
