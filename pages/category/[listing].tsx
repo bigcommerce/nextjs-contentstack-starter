@@ -2,8 +2,8 @@ import type {GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult} 
 import { Layout } from '@vercel/examples-ui'
 import { Navbar, Footer, UIComponent, Container } from '@components/ui'
 import {getAllEntries} from "@lib/cmsEntries";
-import {fetchGraphQL} from "../../src/bigcommerce/fetchers/fetch-graphql";
-import {fetchCategoryProductQuery} from "../../src/bigcommerce/graphql/queries/fetch-category-products-query.graphql";
+import {fetchGraphQL} from "../../lib/bigcommerce/fetchers/fetch-graphql";
+import {fetchCategoryProductQuery} from "../../lib/bigcommerce/graphql/queries/fetch-category-products-query.graphql";
 import getSlugName from "@lib/get-slug-name";
 import ProductCard from "@components/ui/ProductCard";
 

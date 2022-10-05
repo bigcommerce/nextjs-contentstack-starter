@@ -27,20 +27,11 @@ Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_mediu
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/examples/tree/main/solutions/cms-contentstack-commerce&project-name=cms-contentstack-commerce&repository-name=cms-contentstack-commerce&env=CONTENTSTACK_API_KEY,CONTENTSTACK_ACCESS_TOKEN,CONTENTSTACK_ENV)
 
-### Clone and Deploy
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npx create-next-app --example https://github.com/vercel/examples/tree/main/solutions/cms-contentstack-commerce cms-contentstack-commerce
-# or
-yarn create next-app --example https://github.com/vercel/examples/tree/main/solutions/cms-contentstack-commerce cms-contentstack-commerce
-```
 
 Copy the `.env.example` file in this directory to `.env.local` and set your Contentstack settings
 
 ```bash
-cp .env.local .env.local.local
+cp .env .env.local
 ```
 
 Next, run Next.js in development mode:

@@ -14,7 +14,6 @@ const API_TOKEN = process.env.BIGCOMMERCE_STOREFRONT_API_TOKEN
 export const fetchGraphQL = async (query: string, variables = {}, fetchOptions = {}) => {
   const apiUrl = String(API_URL)
   const apiToken = String(API_TOKEN)
-
   const res = await fetch(apiUrl, {
     ...fetchOptions,
     method: 'POST',
