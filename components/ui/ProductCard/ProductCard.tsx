@@ -1,14 +1,17 @@
-import React, { ReactElement } from "react";
-import Image, { ImageProps } from "next/image";
+import React, { FC } from "react";
+import Image from "next/image";
 import s from "./ProductCard.module.css";
 import Link from "next/link";
+import { ProductForCard } from "@lib/bigcommerce/types/product";
 
-type Props = {
-  className?: string;
+interface ProductSliderProps {
   product: any;
-};
-export const ProductCard = (props: Props): ReactElement => {
-  const { product } = props;
+  title?: string;
+  description?: string;
+}
+
+export const ProductCard: FC<ProductSliderProps> = ({ product }) => {
+  console.log("product", product);
   const image =
     product?.node?.defaultImage?.url640wide ||
     product?.node?.images?.edges[0]?.node?.urlOriginal ||

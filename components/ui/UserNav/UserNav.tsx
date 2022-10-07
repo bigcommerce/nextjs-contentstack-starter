@@ -4,6 +4,7 @@ import { Bag } from "@components/icons";
 import s from "./UserNav.module.css";
 import useCart from "@bigcommerce/storefront-data-hooks/cart/use-cart";
 import { Cart } from "@lib/bigcommerce/types/cart";
+import Link from "next/link";
 
 interface Props {
   className?: string;
@@ -32,11 +33,12 @@ const UserNav: FC<Props> = ({ className, children, ...props }) => {
     <nav className={cn(s.root, className)}>
       <div className={s.mainContainer}>
         <ul className={s.list}>
-          <li className={s.item}>
-            <Bag />
-            if(cart?.line_items)
-            {<span className={s.bagCount}>1</span>}
-          </li>
+          <Link href={`/cart`}>
+            <li className={s.item}>
+              <Bag />
+              <span className={s.bagCount}>1</span>
+            </li>
+          </Link>
         </ul>
       </div>
     </nav>

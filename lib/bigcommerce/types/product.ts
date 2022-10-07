@@ -31,24 +31,6 @@ export type ProductPrice = {
   extendedListPrice?: number;
 };
 
-export type ProductSpec = {
-  name: string;
-  value: string;
-  displayOrder: number;
-};
-
-// A JSON object, pushed to Algolia for a simple k/v object for faceting
-export type ProductSpecFacets = {
-  [key: string]: string | number;
-};
-
-// TODO - Can we merge this back into ProductSpec?
-export type ProductSpecForAlgoliaFaceting = {
-  [key: string]: string | number;
-  value: string;
-  displayOrder: number;
-};
-
 export type ProductOption = {
   __typename?: "MultipleChoiceOption";
   id: string;
@@ -79,25 +61,20 @@ export type Product = {
   id: string;
   objectID: string;
   name: string;
-  intro: string; // Sidebar
-  details?: string; // TODO populate from specialCustomFields
-  detailsPoints: BulletPoints;
-  summary: string;
-  summaryPoints: BulletPoints;
-  description: string; // Fallback for **Summary**
+  description: string;
   descriptionHtml?: string;
   warranty?: string; // STOREFRONT_AVAILABILITY_TEXT
   shipping?: string; // STOREFRONT_WARRANTY_INFO
-  sku?: SKU; // TODO - Make required.
+  sku?: SKU;
   slug?: string;
   path?: string;
   brand?: BrandInfo;
+  defaultImage?: { url640wide: string };
   categories?: CategoryInfo[];
   images: ProductImage[];
   variants: ProductVariant[];
   price: ProductPrice;
   options: ProductOption[];
-  meta?: ProductMeta;
   custom_url?: { url: string; is_customized: boolean };
 };
 
@@ -105,37 +82,12 @@ export type Product = {
 // and allows for smaller queries, or sending less data to the FE
 export const ProductForCardFields = [
   "id",
-  "meta",
   "price",
   "path",
   "slug",
   "images",
   "name",
   "brand",
+  "defaultImage",
 ] as const;
 export type ProductForCard = Pick<Product, typeof ProductForCardFields[number]>;
-
-export type CustomFields = Record<string, string>; // { [key: string]: string }
-
-export type ProductRating = number;
-
-export type ProductMeta = {
-  rating: ProductRating;
-  flag: any | null;
-  // flag: ProductFlagProps | null
-};
-
-export const EmptyProductMeta: ProductMeta = { rating: 0, flag: null };
-
-export type SearchProductsBody = {
-  search?: string;
-  categoryId?: string | number;
-  brandId?: string | number;
-  sort?: string;
-  locale?: string;
-};
-
-export type ProductTypes = {
-  product: Product;
-  searchBody: SearchProductsBody;
-};

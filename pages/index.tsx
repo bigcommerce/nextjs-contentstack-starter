@@ -4,20 +4,17 @@ import { Layout } from "@vercel/examples-ui";
 import { Navbar, Footer, UIComponent, Container } from "@components/ui";
 import { getAllEntries, getEntriesByKey } from "@lib/cmsEntries";
 
-export async function getStaticProps({
-  locale,
-}: GetStaticPropsContext): Promise<
-  GetStaticPropsResult<Entry | null> | undefined
-> {
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
   try {
     const entry = await getAllEntries("home_page");
-
-    console.log("entry", entry[0]);
+    const header = await getAllEntries("header");
+    const navBar: any = header[0];
 
     if (entry) {
       return {
         props: {
           ...entry[0],
+          navBar,
         },
         revalidate: 1,
       };
@@ -29,10 +26,11 @@ export async function getStaticProps({
   }
 }
 
-function Index(props: Entry) {
-  console.log("props", props);
+function Index(props: any) {
+  const { title, seo, modular_blocks = [], navBar } = props;
 
-  const { title, seo, modular_blocks = [], header = { links: [] } } = props;
+  console.log("header", props);
+  console.log("navLinks", navBar);
 
   return (
     <>
@@ -44,8 +42,8 @@ function Index(props: Entry) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container>
-        <Navbar data={header} />
-        {modular_blocks.map(({ component }, i) => {
+        <Navbar data={navBar} />
+        {modular_blocks.map((component: any, i: number) => {
           const { component_type, component_variant, ...rest } = component;
           return (
             <UIComponent
