@@ -2,7 +2,7 @@ import type { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import { Layout } from "@vercel/examples-ui";
 import { Navbar, Footer, UIComponent, Container } from "@components/ui";
-import { getAllEntries } from "@lib/cmsEntries";
+import { getAllEntries } from "@lib/cms/cmsEntries";
 
 export async function getStaticProps() {
   try {

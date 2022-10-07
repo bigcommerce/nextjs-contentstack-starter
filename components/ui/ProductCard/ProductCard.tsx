@@ -12,6 +12,8 @@ interface ProductSliderProps {
 
 export const ProductCard: FC<ProductSliderProps> = ({ product }) => {
   console.log("product", product);
+
+  //This is a good use case to normalize your data from different sources.
   const image =
     product?.node?.defaultImage?.url640wide ||
     product?.node?.images?.edges[0]?.node?.urlOriginal ||

@@ -4,34 +4,35 @@
  *
  * WILL EVENTUALLY REPLACE :  framework/bigcommerce/api/utils/fetch-graphql-api.ts
  */
-import fetch from 'node-fetch'
-
+import fetch from "node-fetch";
 
 // TODO Move into a central ENV object.
-const API_URL = process.env.BIGCOMMERCE_STOREFRONT_API_URL
-const API_TOKEN = process.env.BIGCOMMERCE_STOREFRONT_API_TOKEN
+const API_URL = process.env.BIGCOMMERCE_STOREFRONT_API_URL;
+const API_TOKEN = process.env.BIGCOMMERCE_STOREFRONT_API_TOKEN;
 
-export const fetchGraphQL = async (query: string, variables = {}, fetchOptions = {}) => {
-  const apiUrl = String(API_URL)
-  const apiToken = String(API_TOKEN)
+export const fetchGraphQL = async (
+  query: string,
+  variables = {},
+  fetchOptions = {}
+) => {
+  const apiUrl = String(API_URL);
+  const apiToken = String(API_TOKEN);
   const res = await fetch(apiUrl, {
     ...fetchOptions,
-    method: 'POST',
+    method: "POST",
     headers: {
       Authorization: `Bearer ${apiToken}`,
-      // ...fetchOptions,
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       query,
       variables,
     }),
-  })
+  });
 
-  const json = await res.json()
+  const json = await res.json();
   if (json.errors) {
-
   }
 
-  return { data: json.data, res }
-}
+  return { data: json.data, res };
+};

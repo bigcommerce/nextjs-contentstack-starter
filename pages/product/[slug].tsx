@@ -5,7 +5,7 @@ import { fetchProductPaths } from "../../lib/bigcommerce/graphql/queries/fetch-p
 import getProduct from "@bigcommerce/storefront-data-hooks/api/operations/get-product";
 import getAllProducts from "@bigcommerce/storefront-data-hooks/api/operations/get-all-products";
 import { Footer, Navbar, UIComponent, Container } from "@components/ui";
-import { getAllEntries } from "@lib/cmsEntries";
+import { getAllEntries } from "@lib/cms/cmsEntries";
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   const productPaths = await fetchProductPaths();
