@@ -1,10 +1,10 @@
-import type { GetStaticPropsContext, GetStaticPropsResult } from "next";
+import type { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import { Layout } from "@vercel/examples-ui";
 import { Navbar, Footer, UIComponent, Container } from "@components/ui";
-import { getAllEntries, getEntriesByKey } from "@lib/cmsEntries";
+import { getAllEntries } from "@lib/cmsEntries";
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
+export async function getStaticProps() {
   try {
     const entry = await getAllEntries("home_page");
     const header = await getAllEntries("header");
@@ -31,6 +31,7 @@ function Index(props: any) {
 
   console.log("header", props);
   console.log("navLinks", navBar);
+  console.log("modular_blocks", modular_blocks);
 
   return (
     <>
@@ -43,7 +44,8 @@ function Index(props: any) {
       </Head>
       <Container>
         <Navbar data={navBar} />
-        {modular_blocks.map((component: any, i: number) => {
+        {/*// @ts-ignore*/}
+        {modular_blocks.map(({ component }, i) => {
           const { component_type, component_variant, ...rest } = component;
           return (
             <UIComponent

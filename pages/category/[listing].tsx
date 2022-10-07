@@ -16,14 +16,11 @@ export async function getStaticProps({
 }: GetStaticPropsContext): Promise<
   GetStaticPropsResult<any | null> | undefined
 > {
-  //TODO   GetStaticPropsResult<Products
   const listing =
     typeof params?.listing === "string" ? getSlugName(params.listing) : "";
   const entry = await getAllEntries("header");
 
-  const header = await getAllEntries("header");
-
-  const navBar: any = header[0];
+  const navBar: any = entry[0];
   let products;
   const categories = entry[0]?.bc_cat?.data;
   try {
@@ -86,7 +83,7 @@ function Listing(props: any) {
           );
         })}
         <div className="grid grid-cols-2 gap-2 lg:m-3 w-full lg:grid-cols-3 lg:pr-2 lg:pl-2">
-          {normalizeProducts.map((product: any, i: any) => {
+          {normalizeProducts.map((product: any) => {
             return (
               <div key={product?.node?.name}>
                 <ProductCard product={product} />

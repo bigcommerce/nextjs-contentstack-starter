@@ -1,16 +1,11 @@
-import type {
-  GetStaticPathsContext,
-  GetStaticPropsContext,
-  InferGetStaticPropsType,
-} from "next";
-import { useRouter } from "next/router";
+import type { GetStaticPathsContext, GetStaticPropsContext } from "next";
 import { Layout } from "@vercel/examples-ui";
 import ProductView from "@components/ui/ProductView";
 import { fetchProductPaths } from "../../lib/bigcommerce/graphql/queries/fetch-product-paths";
-import { getConfig } from "@bigcommerce/storefront-data-hooks/api";
 import getProduct from "@bigcommerce/storefront-data-hooks/api/operations/get-product";
 import getAllProducts from "@bigcommerce/storefront-data-hooks/api/operations/get-all-products";
 import { Footer, Navbar, UIComponent, Container } from "@components/ui";
+import { getAllEntries } from "@lib/cmsEntries";
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   const productPaths = await fetchProductPaths();
@@ -24,14 +19,13 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
 
 export async function getStaticProps({
   params,
-  locale,
-  locales,
-  preview,
 }: GetStaticPropsContext<{ slug: string }>) {
   const product = await getProduct({ variables: { slug: params!.slug } });
   const allProductsPromise = await getAllProducts({ variables: { first: 4 } });
 
   const { products: relatedProducts } = await allProductsPromise;
+  const header = await getAllEntries("header");
+  const navBar: any = header[0];
 
   if (!product) {
     throw new Error(`Product with slug '${params!.slug}' not found`);
@@ -40,6 +34,7 @@ export async function getStaticProps({
   return {
     props: {
       product,
+      navBar,
       relatedProducts,
     },
     revalidate: 200,
@@ -47,20 +42,12 @@ export async function getStaticProps({
 }
 
 function Slug(props: any) {
-  const router = useRouter();
-
-  //TODO switch over to new header entitiy
-  const {
-    product,
-    relatedProducts,
-    modular_blocks = [],
-    header = { links: [] },
-  } = props;
+  const { product, relatedProducts, modular_blocks = [], navBar } = props;
 
   return (
     <>
       <Container>
-        <Navbar data={header} />
+        <Navbar data={navBar} />
         {modular_blocks.map((component: any, i: any) => {
           const { component_type, component_variant, ...rest } = component;
           return (
