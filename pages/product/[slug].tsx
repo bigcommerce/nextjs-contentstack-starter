@@ -25,7 +25,7 @@ export async function getStaticProps({
 
   const { products: relatedProducts } = await allProductsPromise;
   const header = await getAllEntries("header");
-  const navBar: any = header[0];
+  const navBar: any = header[0] || {};
 
   if (!product) {
     throw new Error(`Product with slug '${params!.slug}' not found`);

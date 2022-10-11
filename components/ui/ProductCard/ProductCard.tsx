@@ -2,10 +2,10 @@ import React, { FC } from "react";
 import Image from "next/image";
 import s from "./ProductCard.module.css";
 import Link from "next/link";
-import { ProductForCard } from "@lib/bigcommerce/types/product";
+import { Product, ProductForCard } from "@lib/bigcommerce/types/product";
 
 interface ProductSliderProps {
-  product: any;
+  product: Product;
   title?: string;
   description?: string;
 }
@@ -15,11 +15,12 @@ export const ProductCard: FC<ProductSliderProps> = ({ product }) => {
 
   //This is a good use case to normalize your data from different sources.
   const image =
-    product?.node?.defaultImage?.url640wide ||
-    product?.node?.images?.edges[0]?.node?.urlOriginal ||
+    product?.defaultImage?.url640wide ||
+    // @ts-ignore
+    product?.images?.edges[0]?.node?.urlOriginal ||
     "";
 
-  let path = product?.node?.path || "";
+  let path = product?.path || "";
 
   return (
     <>
@@ -31,12 +32,12 @@ export const ProductCard: FC<ProductSliderProps> = ({ product }) => {
                 className={s.productImage}
                 src={image}
                 layout={"fill"}
-                alt={"test"}
+                alt={product?.name}
               />
             )}
           </div>
-          <div className={s.name}>{product?.node?.name}</div>
-          <div className={s.price}>{product?.node?.prices?.price?.value}</div>
+          <div className={s.name}>{product?.name}</div>
+          <div className={s.price}>{product?.prices?.listPrice}</div>
         </div>
       </Link>
     </>

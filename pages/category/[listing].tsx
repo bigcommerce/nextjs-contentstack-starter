@@ -10,6 +10,7 @@ import { fetchGraphQL } from "../../lib/bigcommerce/fetchers/fetch-graphql";
 import { fetchCategoryProductQuery } from "../../lib/bigcommerce/graphql/queries/fetch-category-products-query.graphql";
 import getSlugName from "@lib/get-slug-name";
 import ProductCard from "@components/ui/ProductCard";
+import { Product } from "@lib/bigcommerce/types/product";
 
 export async function getStaticProps({
   params,
@@ -20,7 +21,7 @@ export async function getStaticProps({
     typeof params?.listing === "string" ? getSlugName(params.listing) : "";
   const entry = await getAllEntries("header");
 
-  const navBar: any = entry[0];
+  const navBar: any = entry[0] || null;
   let products;
   const categories = entry[0]?.bc_cat?.data;
   try {
@@ -36,12 +37,11 @@ export async function getStaticProps({
     } else {
       //TODO Brands
       //Return not found
-      console.log("not cat match");
+      console.log("no cat match");
     }
   } catch (err) {}
 
-  //TODO
-  const normalizeProducts =
+  const normalizeProducts: Product[] =
     products?.data?.site?.search?.searchProducts?.products?.edges || [];
 
   if (normalizeProducts) {
@@ -63,9 +63,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 }
 
 function Listing(props: any) {
-  //TODO switch over to new header entitiy
   const { normalizeProducts, navBar, modular_blocks = [] } = props;
-
   return (
     <>
       <Container>
@@ -83,10 +81,11 @@ function Listing(props: any) {
           );
         })}
         <div className="grid grid-cols-2 gap-2 lg:m-3 w-full lg:grid-cols-3 lg:pr-2 lg:pl-2">
-          {normalizeProducts.map((product: any) => {
+          {/*// @ts-ignore*/}
+          {normalizeProducts.map(({ node }) => {
             return (
-              <div key={product?.node?.name}>
-                <ProductCard product={product} />
+              <div key={node?.name}>
+                <ProductCard product={node} />
               </div>
             );
           })}

@@ -8,8 +8,8 @@ export async function getStaticProps() {
   try {
     const entry = await getAllEntries("home_page");
     const header = await getAllEntries("header");
-    const navBar: any = header[0];
-
+    const navBar: any = header[0] || null;
+    console.log("navBar", navBar);
     if (entry) {
       return {
         props: {
@@ -28,8 +28,6 @@ export async function getStaticProps() {
 
 function Index(props: any) {
   const { modular_blocks = [], navBar } = props;
-
-  console.log("header", props);
   console.log("navLinks", navBar);
   console.log("modular_blocks", modular_blocks);
   return (

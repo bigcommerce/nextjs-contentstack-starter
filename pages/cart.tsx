@@ -15,7 +15,7 @@ export async function getStaticProps({
   const entry = await getAllEntries("header");
   console.log("entry", entry);
 
-  const navBar: any = entry[0];
+  const navBar: any = entry[0] || null;
 
   return {
     props: { navBar },

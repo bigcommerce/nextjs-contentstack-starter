@@ -3,6 +3,7 @@ import { FC, ReactNode, Component } from "react";
 import s from "./GridProduct.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { Product } from "@lib/bigcommerce/types/product";
 
 export interface GridData {
   item: ItemData;
@@ -51,21 +52,8 @@ const GridProduct: FC<Props> = ({
   const { grid } = data;
   // @ts-ignore
   const { bc_products } = grid[0];
-  // @ts-ignore
-  console.log("kjskjskj", bc_products);
 
   if (grid) {
-    const meassureProps =
-      variant === "cols4"
-        ? {
-            width: 263,
-            height: 365,
-          }
-        : {
-            width: 365,
-            height: 365,
-          };
-
     return (
       <div>
         <div className="text-center my-12">
@@ -77,7 +65,7 @@ const GridProduct: FC<Props> = ({
           {data.description && <p className="">{data.description}</p>}
         </div>
         <div className={rootClassName}>
-          {bc_products?.data?.map((item: any, i: any) => (
+          {bc_products?.data?.map((item: Product, i: any) => (
             <div
               className="flex flex-col items-center text-center mb-10"
               key={`item__${i}`}
@@ -85,10 +73,10 @@ const GridProduct: FC<Props> = ({
               <div className="mb-2">
                 {item?.name && (
                   <Image
-                    src={item.primary_image?.url_standard}
+                    src={item.primary_image?.url_standard || ""}
                     alt={item.primary_image?.url_standard}
-                    layout="fixed"
-                    {...meassureProps}
+                    height={200}
+                    width={200}
                   />
                 )}
               </div>
@@ -100,7 +88,9 @@ const GridProduct: FC<Props> = ({
               {item?.description && (
                 <div
                   className="mb-2 px-4"
-                  dangerouslySetInnerHTML={{ __html: item?.description }}
+                  dangerouslySetInnerHTML={{
+                    __html: item?.description.substring(0, 100),
+                  }}
                 />
               )}
               <Link href={`product${item?.custom_url?.url}`} passHref>

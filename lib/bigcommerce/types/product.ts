@@ -16,6 +16,7 @@ export type ProductImage = {
   url: string;
   urlOriginal?: string;
   url_thumbnail?: string;
+  url_standard?: string;
   alt?: string;
   url_so?: string;
   isDefault?: boolean;
@@ -55,8 +56,6 @@ export type ProductVariant = {
   defaultImage?: ProductImage;
 };
 
-export type BulletPoints = Array<string>;
-
 export type Product = {
   id: string;
   objectID: string;
@@ -72,8 +71,10 @@ export type Product = {
   defaultImage?: { url640wide: string };
   categories?: CategoryInfo[];
   images: ProductImage[];
+  primary_image: ProductImage;
   variants: ProductVariant[];
   price: ProductPrice;
+  prices: ProductPrice;
   options: ProductOption[];
   custom_url?: { url: string; is_customized: boolean };
 };
