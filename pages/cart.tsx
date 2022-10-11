@@ -2,38 +2,34 @@ import type { GetStaticPropsContext } from "next";
 import { Bag, Cross, Check, MapPin } from "@components/icons";
 import { Layout } from "@vercel/examples-ui";
 import { Navbar, Footer, UIComponent, Container } from "@components/ui";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getAllEntries } from "@lib/cms/cmsEntries";
+import { GetStaticPropsResult } from "next";
+import { CartItem } from "@components/ui/cart";
 
 export async function getStaticProps({
-  preview,
-  locale,
-  locales,
-}: GetStaticPropsContext) {
+  params,
+}: GetStaticPropsContext): Promise<
+  GetStaticPropsResult<any | null> | undefined
+> {
+  const entry = await getAllEntries("header");
+  console.log("entry", entry);
+
+  const navBar: any = entry[0];
+
   return {
-    props: {},
+    props: { navBar },
   };
 }
 
 export default function Cart(props: any) {
   //TODO switch over to new header entitiy
   const {
-    product,
+    navbar,
     relatedProducts,
     modular_blocks = [],
     header = { links: [] },
   } = props;
-  // const { price: subTotal } = usePrice(
-  //     data && {
-  //         amount: Number(data.subtotalPrice),
-  //         currencyCode: data.currency.code,
-  //     }
-  // )
-  // const { price: total } = usePrice(
-  //     data && {
-  //         amount: Number(data.totalPrice),
-  //         currencyCode: data.currency.code,
-  //     }
-  // )
 
   const checkout = async () => {
     try {
@@ -54,13 +50,36 @@ export default function Cart(props: any) {
       console.error("Error updating the product: ", error);
     }
   };
+
+  const [cart, setCart] = useState(null);
+  useEffect(() => {
+    async function getCart() {
+      await fetch(`/api/cart`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data: any) {
+          // @ts-ignore
+          setCart(data);
+        });
+    }
+    getCart();
+  }, []);
+
+  console.log("cart", cart);
+  console.log("navbar", navbar);
+
   return (
     <>
       <Container>
-        <Navbar data={header} />
+        <Navbar data={navbar} />
         <div className="grid lg:grid-cols-12 w-full max-w-7xl mx-auto">
           <div className="lg:col-span-8">
-            {"true" == "true" ? (
+            {/*// @ts-ignore*/}
+            {cart?.lineItems > 0 ? (
               <div className="flex-1 px-12 py-24 flex flex-col justify-center items-center ">
                 <span className="border border-dashed border-secondary flex items-center justify-center w-16 h-16 bg-primary p-12 rounded-lg text-primary">
                   <Bag className="absolute" />
@@ -73,35 +92,28 @@ export default function Cart(props: any) {
               <div className="px-4 sm:px-6 flex-1">
                 <h1>My Cart</h1>
                 <h2>Review your Order</h2>
-                <ul className="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-grayscale-2 border-b border-grayscale-2">
-                  {/*{data!.lineItems.map((item: any) => (*/}
-                  {/*    <CartItem key={item.id} item={item} currencyCode={data?.currency.code!} />*/}
-                  {/*))}*/}
+                <ul className="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y  border-b">
+                  {/*// @ts-ignore*/}
+                  {cart?.lineItems.map((item: any) => (
+                    <CartItem
+                      key={item.id}
+                      item={item}
+                      // @ts-ignore
+                      currencyCode={cart?.currency.code!}
+                    />
+                  ))}
                 </ul>
-                <div className="my-6">
-                  <text>
-                    Before you leave, take a look at these items. We picked them
-                    just for you
-                  </text>
-                  <div className="flex py-6 space-x-6">
-                    {[1, 2, 3, 4, 5, 6].map((x) => (
-                      <div
-                        key={x}
-                        className="border border-grayscale-3 w-full h-24 bg-grey-4 bg-opacity-50 transform cursor-pointer hover:scale-110 duration-75"
-                      />
-                    ))}
-                  </div>
-                </div>
               </div>
             )}
           </div>
           <div className="lg:col-span-4">
             <div className="flex-shrink-0 px-4 py-24 sm:px-6">
-              <div className="border-t border-grayscale-2">
+              <div className="border-t">
                 <ul className="py-3">
                   <li className="flex justify-between py-1">
                     <span>Subtotal</span>
-                    <span>66</span>
+                    {/*// @ts-ignore*/}
+                    <span>{cart?.subtotalPrice}</span>
                   </li>
                   <li className="flex justify-between py-1">
                     <span>Taxes</span>
@@ -112,9 +124,10 @@ export default function Cart(props: any) {
                     <span className="font-bold tracking-wide">FREE</span>
                   </li>
                 </ul>
-                <div className="flex justify-between border-t border-grayscale-2 py-3 font-bold mb-10">
+                <div className="flex justify-between border-t py-3 font-bold mb-10">
                   <span>Total</span>
-                  <span>99</span>
+                  {/*// @ts-ignore*/}
+                  <span>{cart?.total}</span>
                 </div>
               </div>
               <div className="flex flex-row justify-end">

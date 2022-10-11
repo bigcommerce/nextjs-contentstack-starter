@@ -1,48 +1,44 @@
-import { FC } from 'react'
-import cn from 'classnames'
-import Link from 'next/link'
-import { Github } from '@components/icons'
-import Logo from '@components/ui/Logo'
-import Container from '@components/ui/Container'
-import I18nWidget from '@components/ui/I18nWidget'
-import s from './Footer.module.css'
+import { FC } from "react";
+import cn from "classnames";
+import Link from "next/link";
+import { Github } from "@components/icons";
+import Container from "@components/ui/Container";
+import s from "./Footer.module.css";
 
 interface Props {
-  className?: string
-  children?: any
-  pages?: Array<any>
+  className?: string;
+  children?: any;
+  pages?: Array<any>;
 }
 
 const footerNavigation = {
   shop: [
-    { name: 'Bags', href: '#' },
-    { name: 'Tees', href: '#' },
-    { name: 'Objects', href: '#' },
-    { name: 'Home Goods', href: '#' },
-    { name: 'Accessories', href: '#' },
+    { name: "Bags", href: "#" },
+    { name: "Tees", href: "#" },
+    { name: "Objects", href: "#" },
+    { name: "Home Goods", href: "#" },
+    { name: "Accessories", href: "#" },
   ],
   company: [
-    { name: 'Who we are', href: '#' },
-    { name: 'Sustainability', href: '#' },
-    { name: 'Press', href: '#' },
-    { name: 'Careers', href: '#' },
-    { name: 'Terms & Conditions', href: '#' },
-    { name: 'Privacy', href: '#' },
+    { name: "Who we are", href: "#" },
+    { name: "Sustainability", href: "#" },
+    { name: "Press", href: "#" },
+    { name: "Careers", href: "#" },
+    { name: "Terms & Conditions", href: "#" },
+    { name: "Privacy", href: "#" },
   ],
   account: [
-    { name: 'Manage Account', href: '#' },
-    { name: 'Returns & Exchanges', href: '#' },
-    { name: 'Redeem a Gift Card', href: '#' },
+    { name: "Manage Account", href: "#" },
+    { name: "Returns & Exchanges", href: "#" },
+    { name: "Redeem a Gift Card", href: "#" },
   ],
   connect: [
-    { name: 'Contact Us', href: '#' },
-    { name: 'Twitter', href: '#' },
-    { name: 'Instagram', href: '#' },
-    { name: 'Pinterest', href: '#' },
+    { name: "Contact Us", href: "#" },
+    { name: "Twitter", href: "#" },
+    { name: "Instagram", href: "#" },
+    { name: "Pinterest", href: "#" },
   ],
-}
-
-const LEGAL_PAGES = ['terms-of-use', 'shipping-returns', 'privacy-policy']
+};
 
 const Footer: FC<Props> = () => {
   return (
@@ -166,13 +162,12 @@ const Footer: FC<Props> = () => {
               >
                 <Github />
               </a>
-              {/*<I18nWidget />*/}
             </div>
           </div>
         </div>
       </Container>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

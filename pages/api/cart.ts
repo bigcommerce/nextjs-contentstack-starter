@@ -3,8 +3,9 @@ import { parseString } from "set-cookie-parser";
 
 const BigCommerce = require("node-bigcommerce");
 import getCartCookie from "./utils/get-cart-cookie";
+import { normalizeCart } from "@lib/bigcommerce/normalize";
 
-async function cart(req: NextApiRequest, res: NextApiResponse) {
+export default async function cart(req: NextApiRequest, res: NextApiResponse) {
   const { body, method, headers } = req;
   const ONE_DAY = 60 * 60 * 24;
   const API_URL = process.env.BIGCOMMERCE_STORE_API_URL;
@@ -27,7 +28,8 @@ async function cart(req: NextApiRequest, res: NextApiResponse) {
     try {
       const { data } = await bigCommerce.get(`/carts/${bc_cart}`);
       console.log("currentCart", data);
-      res.status(200).json(data);
+
+      res.status(200).json(normalizeCart(data) || null);
     } catch (error) {
       // @ts-ignore
       const { message, response } = error;
