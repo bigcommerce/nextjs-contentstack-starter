@@ -8,7 +8,6 @@ import { normalizeCart } from "@lib/bigcommerce/normalize";
 export default async function cart(req: NextApiRequest, res: NextApiResponse) {
   const { body, method, headers } = req;
   const ONE_DAY = 60 * 60 * 24;
-  const API_URL = process.env.BIGCOMMERCE_STORE_API_URL;
   const API_TOKEN = process.env.BIGCOMMERCE_STORE_API_TOKEN;
   const CLIENT_ID = process.env.BIGCOMMERCE_STORE_API_CLIENT_ID;
 

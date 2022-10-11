@@ -27,19 +27,19 @@ export async function getStaticProps() {
 }
 
 function Index(props: any) {
-  const { title, seo, modular_blocks = [], navBar } = props;
+  const { modular_blocks = [], navBar } = props;
 
   console.log("header", props);
   console.log("navLinks", navBar);
   console.log("modular_blocks", modular_blocks);
-
   return (
     <>
       <Head>
-        <title>
-          {seo?.title ? seo?.title : title} - {seo?.description}
-        </title>
-        <meta name="description" content={seo?.description} />
+        <title>BigCommerce Example</title>
+        <meta
+          name="description"
+          content="This is a basic example outlining how to use BigCommerce"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container>

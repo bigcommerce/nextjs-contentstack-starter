@@ -1,13 +1,13 @@
 import type { GetStaticPathsContext, GetStaticPropsContext } from "next";
 import { Layout } from "@vercel/examples-ui";
 import ProductView from "@components/ui/ProductView";
-import { fetchProductPaths } from "../../lib/bigcommerce/graphql/queries/fetch-product-paths";
+import { fetchProductPaths } from "@lib/bigcommerce/graphql/queries/fetch-product-paths";
 import getProduct from "@bigcommerce/storefront-data-hooks/api/operations/get-product";
 import getAllProducts from "@bigcommerce/storefront-data-hooks/api/operations/get-all-products";
 import { Footer, Navbar, UIComponent, Container } from "@components/ui";
 import { getAllEntries } from "@lib/cms/cmsEntries";
 
-export async function getStaticPaths({ locales }: GetStaticPathsContext) {
+export async function getStaticPaths() {
   const productPaths = await fetchProductPaths();
   const paths = productPaths.map((path: string) => `/product${path}`);
 

@@ -1,5 +1,5 @@
 import type { GetStaticPropsContext } from "next";
-import { Bag, Cross, Check, MapPin } from "@components/icons";
+import { Bag } from "@components/icons";
 import { Layout } from "@vercel/examples-ui";
 import { Navbar, Footer, UIComponent, Container } from "@components/ui";
 import React, { useEffect, useState } from "react";
@@ -24,12 +24,7 @@ export async function getStaticProps({
 
 export default function Cart(props: any) {
   //TODO switch over to new header entitiy
-  const {
-    navbar,
-    relatedProducts,
-    modular_blocks = [],
-    header = { links: [] },
-  } = props;
+  const { navbar, modular_blocks = [] } = props;
 
   const checkout = async () => {
     try {
@@ -42,12 +37,10 @@ export default function Cart(props: any) {
         })
         .then(function (data) {
           console.log("checkoutUrl", data);
-
           window.location = data?.redirect_urls?.checkout_url;
         });
     } catch (error) {
-      //display error
-      console.error("Error updating the product: ", error);
+      console.error("Error going to checkout: ", error);
     }
   };
 
@@ -62,7 +55,6 @@ export default function Cart(props: any) {
           return response.json();
         })
         .then(function (data: any) {
-          // @ts-ignore
           setCart(data);
         });
     }
@@ -70,8 +62,6 @@ export default function Cart(props: any) {
   }, []);
 
   console.log("cart", cart);
-  console.log("navbar", navbar);
-
   return (
     <>
       <Container>
@@ -134,7 +124,7 @@ export default function Cart(props: any) {
                 <div className="w-full lg:w-72">
                   <button
                     onClick={checkout}
-                    className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                    className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
                   >
                     Procced to Checkout
                   </button>
