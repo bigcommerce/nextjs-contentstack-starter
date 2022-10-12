@@ -4,6 +4,7 @@ import { parseString } from "set-cookie-parser";
 const BigCommerce = require("node-bigcommerce");
 import getCartCookie from "./utils/get-cart-cookie";
 import { normalizeCart } from "@lib/bigcommerce/normalize";
+import { Cart } from "@lib/bigcommerce/types/cart";
 
 export default async function cart(req: NextApiRequest, res: NextApiResponse) {
   const { body, method, headers } = req;
@@ -20,15 +21,16 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
     responseType: "json",
   });
 
-  // @ts-ignore
-  let { bc_cart } = parseString(headers?.cookie);
-
   if (method === "GET") {
     try {
-      const { data } = await bigCommerce.get(`/carts/${bc_cart}`);
-      console.log("currentCart", data);
+      if (headers?.cookie) {
+        let bc_cart = parseString(headers?.cookie);
 
-      res.status(200).json(normalizeCart(data) || null);
+        const { data } = await bigCommerce.get(`/carts/${bc_cart.value}`);
+        res.status(200).json(normalizeCart(data) || null);
+      }
+
+      res.status(200).json(null);
     } catch (error) {
       // @ts-ignore
       const { message, response } = error;
@@ -38,10 +40,9 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
     }
   } else if (method === "POST") {
     try {
-      console.log("parsed", bc_cart);
-
-      var returnedCart = {};
-      if (bc_cart) {
+      var data: Cart;
+      if (headers?.cookie) {
+        let bc_cart = parseString(headers?.cookie);
         var cart = {
           line_items: [
             {
@@ -53,8 +54,8 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
           ],
         };
         try {
-          returnedCart = await bigCommerce.post(
-            `/carts/${bc_cart}/items`,
+          data = await bigCommerce.post(
+            `/carts/${bc_cart.value}/items?include=line_items.physical_items.options`,
             cart
           );
         } catch (error) {
@@ -75,17 +76,18 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
             },
           ],
         };
-        returnedCart = await bigCommerce.post("/carts", cart);
+        data = await bigCommerce.post("/carts", cart);
       }
 
       // @ts-ignore
-      const cartId = returnedCart?.data?.id;
+      const cartId = data?.data?.id;
       // Create or update the cart cookie
       res.setHeader(
         "Set-Cookie",
         getCartCookie("bc_cart", cartId, ONE_DAY * 30)
       );
-      res.status(200).json(returnedCart);
+      // @ts-ignore
+      res.status(200).json(normalizeCart(data));
     } catch (error) {
       // @ts-ignore
       const { message, response } = error;
