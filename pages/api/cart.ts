@@ -23,14 +23,14 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
 
   if (method === "GET") {
     try {
-      if (headers?.cookie) {
-        let bc_cart = parseString(headers?.cookie);
-
-        const { data } = await bigCommerce.get(`/carts/${bc_cart.value}`);
+      // @ts-ignore
+      let { bc_cart } = parseString(headers?.cookie);
+      if (bc_cart) {
+        const { data } = await bigCommerce.get(
+          `/carts/${bc_cart}?include=line_items.physical_items.options`
+        );
         res.status(200).json(normalizeCart(data) || null);
       }
-
-      res.status(200).json(null);
     } catch (error) {
       // @ts-ignore
       const { message, response } = error;
@@ -41,8 +41,9 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
   } else if (method === "POST") {
     try {
       var data: Cart;
-      if (headers?.cookie) {
-        let bc_cart = parseString(headers?.cookie);
+      // @ts-ignore
+      let { bc_cart } = parseString(headers?.cookie);
+      if (bc_cart) {
         var cart = {
           line_items: [
             {
@@ -55,7 +56,7 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
         };
         try {
           data = await bigCommerce.post(
-            `/carts/${bc_cart.value}/items?include=line_items.physical_items.options`,
+            `/carts/${bc_cart}/items?include=line_items.physical_items.options`,
             cart
           );
         } catch (error) {
@@ -76,7 +77,10 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
             },
           ],
         };
-        data = await bigCommerce.post("/carts", cart);
+        data = await bigCommerce.post(
+          "/carts?include=line_items.physical_items.options",
+          cart
+        );
       }
 
       // @ts-ignore

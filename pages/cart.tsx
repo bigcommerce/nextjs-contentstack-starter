@@ -36,7 +36,6 @@ export default function Cart(props: any) {
           return response.json();
         })
         .then(function (data) {
-          console.log("checkoutUrl", data);
           window.location = data?.redirect_urls?.checkout_url;
         });
     } catch (error) {

@@ -1,39 +1,23 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import cn from "classnames";
 import { Bag } from "@components/icons";
 import s from "./UserNav.module.css";
-import useCart from "@bigcommerce/storefront-data-hooks/cart/use-cart";
 import { Cart, LineItem } from "@lib/bigcommerce/types/cart";
 import Link from "next/link";
+import useCart from "@lib/bigcommerce/hooks/use-cart";
 
 interface Props {
   className?: string;
 }
 
 const UserNav: FC<Props> = ({ className, children, ...props }) => {
-  const [cart, setCart] = useState(null);
   const countItem = (count: number, item: LineItem) => count + item.quantity;
   var itemsCount = 0;
 
-  useEffect(() => {
-    async function getCart() {
-      await fetch(`/api/cart`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data: Cart) {
-          // @ts-ignore
-          setCart(data);
-        });
-    }
-    getCart();
-  }, []);
+  const { cart, isLoading, isError } = useCart();
+  console.log("cart swr client", cart);
 
   if (cart) {
-    // @ts-ignore
     itemsCount = cart?.lineItems.reduce(countItem, 0) ?? 0;
   }
   return (

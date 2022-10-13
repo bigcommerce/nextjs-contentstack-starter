@@ -29,6 +29,7 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
     }
   };
 
+  console.log("hmmmm", product);
   return (
     <Container>
       <div className="mx-auto  py-16 px-4 px-8">

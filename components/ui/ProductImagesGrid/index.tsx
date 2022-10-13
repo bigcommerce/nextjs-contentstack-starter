@@ -1,11 +1,10 @@
-import React, { ReactElement } from 'react'
-import Image from 'next/image'
-import styles from './ProductImagesGrid.module.css'
+import React, { ReactElement } from "react";
+import Image from "next/image";
+import styles from "./ProductImagesGrid.module.css";
 
 // https://matemarschalko.medium.com/css-only-interactive-swipeable-image-carousel-3a38afe3da58
 
 const ProductImagesGrid = ({ product }: any): ReactElement => {
-    console.log("product 111", product?.product?.images?.edges[0]?.node)
   return (
     <div className={styles.root}>
       <ul className={styles.imageGrid}>
@@ -13,7 +12,7 @@ const ProductImagesGrid = ({ product }: any): ReactElement => {
           <li className={styles.tile} key={idx}>
             <Image
               src={image?.node?.urlOriginal!}
-              alt={image?.node?.alt || 'Product Image'}
+              alt={image?.node?.alt || "Product Image"}
               width={600}
               height={600}
               priority={idx === 0}
@@ -23,7 +22,7 @@ const ProductImagesGrid = ({ product }: any): ReactElement => {
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default ProductImagesGrid
+export default ProductImagesGrid;
