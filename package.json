@@ -1,5 +1,9 @@
 {
-  "repository": "https://github.com/vercel/examples.git",
+  "name": "bigcommerce-nextjs-contentstack-starter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bigcommerce/nextjs-contentstack-starter.git"
+  },
   "license": "MIT",
   "private": true,
   "scripts": {

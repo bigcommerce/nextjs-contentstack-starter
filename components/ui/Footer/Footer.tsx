@@ -151,13 +151,13 @@ const Footer: FC<Props> = () => {
           <div className="flex flex-row border-t border-gray-200 py-10">
             <div className="flex-1">
               <p className="text-sm text-gray-500">
-                &copy; 2020 ACME, Inc. All rights reserved.
+                &copy; 2022 ACME, Inc. All rights reserved.
               </p>
             </div>
             <div className="flex flex-1 space-x-6 items-center h-10 justify-end">
               <a
                 aria-label="Github Repository"
-                href="https://github.com/vercel/commerce"
+                href="https://github.com/bigcommerce/nextjs-contentstack-starter"
                 className={s.link}
               >
                 <Github />
