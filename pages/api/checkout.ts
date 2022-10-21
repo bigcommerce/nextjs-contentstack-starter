@@ -10,7 +10,7 @@ export default async function checkout(
   const API_TOKEN = process.env.BIGCOMMERCE_STORE_API_TOKEN;
   const CLIENT_ID = process.env.BIGCOMMERCE_STORE_API_CLIENT_ID;
 
-  const STORE_HASH = process.env.BIGCOMMERCE_STORE_HASH;
+  const STORE_HASH = process.env.BIGCOMMERCE_STORE_API_STORE_HASH;
   let bigCommerce = new BigCommerce({
     clientId: CLIENT_ID,
     accessToken: API_TOKEN,

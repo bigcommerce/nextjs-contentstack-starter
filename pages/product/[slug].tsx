@@ -1,14 +1,14 @@
-import type { GetStaticPathsContext, GetStaticPropsContext } from "next";
+import type { GetStaticPropsContext } from "next";
 import { Layout } from "@vercel/examples-ui";
 import ProductView from "@components/ui/ProductView";
-import { fetchProductPaths } from "@lib/bigcommerce/graphql/queries/fetch-product-paths";
+import { fetchCategoryProduct } from "@lib/bigcommerce/graphql/queries/fetch-category-product";
 import getProduct from "@bigcommerce/storefront-data-hooks/api/operations/get-product";
 import getAllProducts from "@bigcommerce/storefront-data-hooks/api/operations/get-all-products";
 import { Footer, Navbar, UIComponent, Container } from "@components/ui";
 import { getAllEntries } from "@lib/cms/cmsEntries";
 
 export async function getStaticPaths() {
-  const productPaths = await fetchProductPaths();
+  const productPaths = await fetchCategoryProduct();
   const paths = productPaths.map((path: string) => `/product${path}`);
 
   return {
@@ -18,8 +18,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({
-  params,
-}: GetStaticPropsContext<{ slug: string }>) {
+                                       params,
+                                     }: GetStaticPropsContext<{ slug: string }>) {
   const product = await getProduct({ variables: { slug: params!.slug } });
   const allProductsPromise = await getAllProducts({ variables: { first: 4 } });
 
@@ -43,28 +43,28 @@ export async function getStaticProps({
 
 function Slug(props: any) {
   const { product, relatedProducts, modular_blocks = [], navBar } = props;
-
+  console.log("relatedProducts", relatedProducts);
   return (
-    <>
-      <Container>
-        <Navbar data={navBar} />
-        {modular_blocks.map((component: any, i: any) => {
-          const { component_type, component_variant, ...rest } = component;
-          return (
-            <UIComponent
-              key={`${component_type}_${i}`}
-              componentType={component_type}
-              componentVariant={component_variant}
-              data={rest}
-              priority={i < 3}
-            />
-          );
-        })}
+      <>
+        <Container>
+          <Navbar data={navBar} />
+          {modular_blocks.map((component: any, i: any) => {
+            const { component_type, component_variant, ...rest } = component;
+            return (
+                <UIComponent
+                    key={`${component_type}_${i}`}
+                    componentType={component_type}
+                    componentVariant={component_variant}
+                    data={rest}
+                    priority={i < 3}
+                />
+            );
+          })}
 
-        <ProductView product={product} relatedProducts={relatedProducts} />
-      </Container>
-      <Footer pages={[]} />
-    </>
+          <ProductView product={product} relatedProducts={relatedProducts} />
+        </Container>
+        <Footer pages={[]} />
+      </>
   );
 }
 
