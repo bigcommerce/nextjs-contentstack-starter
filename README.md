@@ -34,7 +34,7 @@ These are the first steps you need to complete to be able to follow instructions
 ![](images/create_a_repo.png)
 <br/>
 
-1. Repository being created... <br/>
+1. Repository being created.. <br/>
 
 1. Login or Sign Up to set up a new BigCommerce store to use! <br/>
 ![](images/add_bc_to_vercel.png)
