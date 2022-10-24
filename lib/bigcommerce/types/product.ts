@@ -71,11 +71,11 @@ export type Product = {
   defaultImage?: { url640wide: string };
   categories?: CategoryInfo[];
   images: ProductImage[];
-  primary_image: ProductImage;
-  variants: ProductVariant[];
-  price: ProductPrice;
-  prices: ProductPrice;
-  options: ProductOption[];
+  primary_image?: ProductImage;
+  variant?: ProductVariant[];
+  price?: ProductPrice;
+  prices?: ProductPrice;
+  options?: ProductOption[];
   custom_url?: { url: string; is_customized: boolean };
 };
 
