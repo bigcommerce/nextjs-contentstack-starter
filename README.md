@@ -29,8 +29,7 @@ These are the first steps you need to complete to be able to follow instructions
 ![](images/choose_stack.png)
 <br/>
 
-1. Enter a name for this repository (it's going to clone itself into your repository platform account) 
-<br/>
+1. Enter a name for this repository (it's going to clone itself into your repository platform account) <br/>
 ![](images/create_a_repo.png)
 <br/>
 
