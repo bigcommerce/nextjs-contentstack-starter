@@ -74,3 +74,7 @@ These are the first steps you need to complete to be able to follow instructions
 
 
 
+------ 
+<br/>
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbigcommerce%2Fnextjs-contentstack-starter&env=CONTENTSTACK_API_KEY,CONTENTSTACK_ACCESS_TOKEN,CONTENTSTACK_ENV&integration-ids=oac_MuWZiE4jtmQ2ejZQaQ7ncuDT&skippable-integrations=1)
