@@ -17,7 +17,7 @@ These are the first steps you need to complete to be able to follow instructions
 ## Let's Get Started! 
 <br/>
 
-1. Step One: ✅ You're here! The first step is being in this repo and hitting the "Deploy" button at the bottom of this ReadME. <br/>
+1. Step One: ✅ You're here! The first step is being in this repo and hitting the "Deploy" button at the bottom of this Read Me. <br/>
 
 2. Hit the "Deploy" button.<br/>
 ![](images/deploy.png)
