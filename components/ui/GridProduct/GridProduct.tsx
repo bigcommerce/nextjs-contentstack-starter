@@ -93,7 +93,7 @@ const GridProduct: FC<Props> = ({
                   }}
                 />
               )}
-              <Link href={`product${item?.custom_url?.url}`} passHref>
+              <Link href={`/product${item?.custom_url?.url}`} passHref>
                 <a
                   className="mt-4 uppercase font-semibold tracking-wide
             text-xs text-slate-900 bg-white rounded-full

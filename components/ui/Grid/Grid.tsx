@@ -47,12 +47,7 @@ const Grid: FC<Props> = ({ className, children, variant, data = {} }) => {
   );
 
   // If it contains data we build the childrens.
-  console.log("data", data);
   const { grid } = data;
-  console.log("grid", grid);
-  {
-    grid?.map((item: any, i) => console.log("1:", item?.bc_products));
-  }
 
   if (grid) {
     const meassureProps =

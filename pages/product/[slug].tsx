@@ -18,8 +18,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({
-                                       params,
-                                     }: GetStaticPropsContext<{ slug: string }>) {
+  params,
+}: GetStaticPropsContext<{ slug: string }>) {
   const product = await getProduct({ variables: { slug: params!.slug } });
   const allProductsPromise = await getAllProducts({ variables: { first: 4 } });
 
@@ -43,28 +43,28 @@ export async function getStaticProps({
 
 function Slug(props: any) {
   const { product, relatedProducts, modular_blocks = [], navBar } = props;
-  console.log("relatedProducts", relatedProducts);
-  return (
-      <>
-        <Container>
-          <Navbar data={navBar} />
-          {modular_blocks.map((component: any, i: any) => {
-            const { component_type, component_variant, ...rest } = component;
-            return (
-                <UIComponent
-                    key={`${component_type}_${i}`}
-                    componentType={component_type}
-                    componentVariant={component_variant}
-                    data={rest}
-                    priority={i < 3}
-                />
-            );
-          })}
 
-          <ProductView product={product} relatedProducts={relatedProducts} />
-        </Container>
-        <Footer pages={[]} />
-      </>
+  return (
+    <>
+      <Container>
+        <Navbar data={navBar} />
+        {modular_blocks.map((component: any, i: any) => {
+          const { component_type, component_variant, ...rest } = component;
+          return (
+            <UIComponent
+              key={`${component_type}_${i}`}
+              componentType={component_type}
+              componentVariant={component_variant}
+              data={rest}
+              priority={i < 3}
+            />
+          );
+        })}
+
+        <ProductView product={product} relatedProducts={relatedProducts} />
+      </Container>
+      <Footer pages={[]} />
+    </>
   );
 }
 

@@ -12,15 +12,11 @@ const UIComponent: React.FC<{
 }> = (props) => {
   const { componentType = "default", componentVariant, data, ...rest } = props;
 
-  console.log("componentType", componentType);
-  console.log("componentVariant", componentVariant);
-
   const componentMap = {
     hero: Hero,
     grid: Grid,
     gridProduct: GridProduct,
     default: () => {
-      console.log("Component Type not specified");
       return null;
     },
   };

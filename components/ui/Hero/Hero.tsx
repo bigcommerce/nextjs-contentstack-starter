@@ -10,9 +10,6 @@ interface Props {
 }
 
 const Hero: React.FC<Props> = ({ data, variant, priority = false }) => {
-  console.log("data", data)
-
-
   const image =
     data.background_image && data.background_image.url
       ? data.background_image.url

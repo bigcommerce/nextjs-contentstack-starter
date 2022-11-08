@@ -3,7 +3,7 @@ import Contentstack, { Config, Query, Region } from 'contentstack'
 
 const contentStackKey = process.env.CONTENTSTACK_API_KEY || ''
 const contentStackToken = process.env.CONTENTSTACK_ACCESS_TOKEN || ''
-const contentStackEnv =  process.env.CONTENTSTACK_ENV ?? process.env.NODE_ENV
+const contentStackEnv = process.env.CONTENTSTACK_ENV ?? process.env.NODE_ENV;
 
 const config: Config = {
     api_key: contentStackKey,

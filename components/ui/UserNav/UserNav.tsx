@@ -15,8 +15,6 @@ const UserNav: FC<Props> = ({ className, children, ...props }) => {
   var itemsCount = 0;
 
   const { cart, isLoading, isError } = useCart();
-  console.log("cart swr client", cart);
-
   if (cart) {
     itemsCount = cart?.lineItems.reduce(countItem, 0) ?? 0;
   }

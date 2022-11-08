@@ -7,8 +7,6 @@ export default function getCartCookie(
     maxAge?: number
 ) {
 
-    console.log("cartId", cartId)
-
     const options: CookieSerializeOptions =
         cartId && maxAge
             ? {

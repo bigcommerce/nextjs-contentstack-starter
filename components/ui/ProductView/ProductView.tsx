@@ -14,7 +14,6 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
       .toString()
       .replace(/<div>&nbsp;<\/div>/g, "");
   const goodHtmlDescription = { __html: rawHtml };
-  console.log("relatedProducts 2", relatedProducts);
   const addToCart = async () => {
     try {
       fetch(`/api/cart`, {

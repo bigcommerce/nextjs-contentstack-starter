@@ -23,13 +23,16 @@ export default async function cart(req: NextApiRequest, res: NextApiResponse) {
 
   if (method === "GET") {
     try {
-      // @ts-ignore
-      let { bc_cart } = parseString(headers?.cookie);
-      if (bc_cart) {
-        const { data } = await bigCommerce.get(
-          `/carts/${bc_cart}?include=line_items.physical_items.options`
-        );
-        res.status(200).json(normalizeCart(data) || null);
+      if (headers?.cookie) {
+        // @ts-ignore
+        const { bc_cart } = parseString(headers?.cookie);
+
+        if (bc_cart) {
+          const { data } = await bigCommerce.get(
+            `/carts/${bc_cart}?include=line_items.physical_items.options`
+          );
+          res.status(200).json(normalizeCart(data) || null);
+        }
       }
     } catch (error) {
       // @ts-ignore

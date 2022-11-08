@@ -11,7 +11,5 @@ export const CartNumber = () => {
     0
   );
 
-  console.log("itemsCount", itemsCount);
-
   return itemsCount > 0 ? <span>{itemsCount}</span> : null;
 };

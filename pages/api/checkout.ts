@@ -25,7 +25,6 @@ export default async function checkout(
     const { data } = await bigCommerce.get(
       `/carts/${bc_cart}?include=redirect_urls`
     );
-    console.log("checkout url", data);
     res.status(200).json(data);
   } catch (error) {
     // @ts-ignore

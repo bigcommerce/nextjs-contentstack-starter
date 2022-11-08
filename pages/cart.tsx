@@ -13,8 +13,6 @@ export async function getStaticProps({
   GetStaticPropsResult<any | null> | undefined
 > {
   const entry = await getAllEntries("header");
-  console.log("entry", entry);
-
   const navBar: any = entry[0] || null;
 
   return {
@@ -60,7 +58,6 @@ export default function Cart(props: any) {
     getCart();
   }, []);
 
-  console.log("cart", cart);
   return (
     <>
       <Container>
